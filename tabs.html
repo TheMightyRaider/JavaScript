@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <style>
+      [role="tabpanel"] {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 10px;
+      }
+      [role="content"] {
+        padding: 10px;
+        border-style: solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tabs">
+      <div role="tabpanel" aria-label="Dashboard">
+        <button role="tab" aria-selected="true" id="FirstTab">First Tab</button>
+        <button role="tab" aria-selected="false" id="SecondTab">Second Tab</button>
+        <button role="tab" aria-selected="false" id="ThirdTab">Third Tab</button>
+      </div>
+      <div role="content" aria-labelledby="FirstTab">
+        This is the First Tab!
+      </div>
+      <div role="content" aria-labelledby="SecondTab" hidden>
+        This is the Second Tab!
+      </div>
+      <div role="content" aria-labelledby="ThirdTab" hidden>
+        This is the Third Tab!
+      </div>
+    </div>
+
+    <script src="tabs.js"></script>
+  </body>
+</html>
