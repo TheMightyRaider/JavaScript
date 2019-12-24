@@ -1,11 +1,70 @@
 <html>
+  <head>
+    <style>
+      .modal {
+        background: hsl(187, 100%, 50%, 1);
+        width: 300px;
+        height: 200px;
+        padding: 10px;
+      }
+
+      .modal-outer {
+        width: 100vw;
+        height: 100vh;
+        background: hsla(283, 100%, 50%, 0.5);
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: grid;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .modal-outer.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 20px;
+        padding: 20px;
+      }
+      .card {
+        border-style: solid;
+        padding: 10px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+
   <body>
-    <div class="main">
-      Contains the main details
-      <button>View more</button>
+    <div class="cards">
+      <div class="card">
+        This is the card 1 <br /><br />
+        <button class="details" data-details="Card 1">More Details</button>
+      </div>
+      <div class="card">
+        This is the card 2 <br /><br />
+        <button class="details" data-details="Card 2">More Details</button>
+      </div>
+      <div class="card">
+        This is the card 3 <br /><br />
+        <button class="details" data-details="Card 3">More Details</button>
+      </div>
+      <div class="card">
+        This is the card 4 <br /><br />
+        <button class="details" data-details="Card 4">More Details</button>
+      </div>
     </div>
-    <div class="modal">
-      This is the modal element
+
+    <div class="modal-outer">
+      <div class="modal">
+        <p class="content">This is the modal</p>
+        <button class="exit">Close</button>
+      </div>
     </div>
+    <script src="modal.js"></script>
   </body>
 </html>
