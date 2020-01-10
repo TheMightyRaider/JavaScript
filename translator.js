@@ -1,9 +1,7 @@
 const bornMonth = document.querySelector(`[name='month']`);
 const button = document.querySelector("button");
 const zodiacSign = document.querySelector(".zodiac");
-
-// Month:Zodiac Object
-// find the zodaic month using the above object.
+const luckyNumber = document.querySelector(".luckyNumber");
 
 const zodiac = {
   03: "Aries",
@@ -20,18 +18,27 @@ const zodiac = {
   02: "Pisces"
 };
 
-function printText(value) {
-  date = value.split("");
-  month = date.slice(6, 7).join("");
-  day = date.slice(8);
-  newdate = [...day, "-", ...month];
-  sign = zodiac[month];
-  zodiacSign.textContent = sign;
-}
+const helpers = {
+  printText({ month, day }) {
+    newdate = [...day, "-", ...month];
+    sign = zodiac[month];
+    zodiacSign.textContent = sign;
+  },
+
+  generateLuckyNumber({ month }) {
+    luckyNumber.textContent = Math.floor(Math.random() * month);
+  }
+};
 
 bornMonth.addEventListener("input", function(event) {
   value = event.currentTarget.value;
+  date = value.split("");
+  const dates = {
+    month: date.slice(6, 7).join(""),
+    day: date.slice(8)
+  };
   button.addEventListener("click", _ => {
-    printText(value);
+    helpers.printText(dates);
+    helpers.generateLuckyNumber(dates);
   });
 });
