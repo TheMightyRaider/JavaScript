@@ -9,10 +9,9 @@ function handleEvent(event) {
   const name = event.currentTarget.newItem.value;
   const itemDetails = {
     name,
-    time: new Date()
+    id: new Date().getTime()
   };
   items.push(itemDetails);
-  //   displayItem(itemDetails);
   list.dispatchEvent(new CustomEvent("itemUpdated"));
   event.target.reset();
 }
@@ -26,6 +25,23 @@ function displayItem() {
   list.innerHTML = html;
 }
 
+function storeDatainLocalStorage() {
+  console.log(JSON.parse(localStorage.getItem("items")));
+  localStorage.setItem("items", JSON.stringify(items));
+  console.log("Stored in Local Storage");
+}
+
+function userState() {
+  let state = JSON.parse(localStorage.getItem("items"));
+  if (state) {
+    state.forEach(item => items.push(item));
+    console.log("Triggering!");
+    list.dispatchEvent(new CustomEvent("itemUpdated"));
+  }
+}
+
 shoppingForm.addEventListener("submit", handleEvent);
 list.addEventListener("itemUpdated", displayItem);
-console.dir(list);
+list.addEventListener("itemUpdated", storeDatainLocalStorage);
+// list.addEventListener("itemUpdated", userState);
+userState();
