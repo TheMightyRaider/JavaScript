@@ -1,0 +1,161 @@
+<html>
+  <head>
+    <body>
+      <style>
+        body {
+          background-color: ivory;
+        }
+
+        .gallery {
+          padding: 2rem;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          grid-gap: 20px;
+          align-items: stretch;
+          background-color: blanchedalmond;
+        }
+
+        .gallery img {
+          width: 80%;
+          border-style: solid;
+          border-width: 10px;
+        }
+
+        .modal {
+          opacity: 0;
+          display: grid;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          position: fixed;
+          pointer-events: none;
+        }
+
+        .modal-inner {
+          padding: 10px;
+          border-style: solid;
+          width: 500px;
+          height: 70%;
+          display: grid;
+          grid-template-columns: 50px 1fr 50px;
+          align-items: center;
+          grid-gap: 10px;
+          background-color: white;
+        }
+
+        .modal-inner .main {
+          display: grid;
+          grid-template-rows: 2fr 1fr;
+          /* border-style: solid; */
+          position: relative;
+          /* justify-content: center; */
+          align-items: center;
+          height: 100%;
+          /* row-gap: 40px; */
+        }
+
+        h2 {
+          padding: 10px;
+          height: 20%;
+          margin-left: 10px;
+          margin-right: 10px;
+          align-items: center;
+          border-style: solid;
+          background-color: seashell;
+          border-color: palevioletred;
+          border-width: 10px;
+        }
+        .modal-inner img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        button {
+          height: 7%;
+          background-color: beige;
+          color: black;
+        }
+
+        .modal.open {
+          opacity: 1;
+          pointer-events: all;
+        }
+
+        .gallery.fade {
+          opacity: 0.2;
+        }
+      </style>
+    </body>
+  </head>
+  <body>
+    <div class="gallery">
+      <img
+        data-rating="9.2"
+        tabindex="0"
+        src="https://images-na.ssl-images-amazon.com/images/I/71%2B0Orec-AL._SY679_.jpg"
+      />
+      <img
+        data-rating="9.3"
+        tabindex="0"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTyUEq4b9XGBM6LnScnRV0bO5sLtLHPUAqp42EMkteN7q5-dFQ4"
+      />
+      <img
+        data-rating="9.4"
+        tabindex="0"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUaF7_wNbbZ3KBkFjWYsJKfBGTGd5zNkwefY7z829kjrKojzHa"
+      />
+      <img
+        data-rating="9.5"
+        tabindex="0"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQS2a1qNNLVP76E_Ob_fP1qPfzaGyxDmK_AfqCyjXTZ35sPbsgX"
+      />
+      <img
+        data-rating="9.6"
+        tabindex="0"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQW7JWBQNOBZqRO-I6hZUEL6nhJcP8SVSbElbQEJx44XElPrHxD"
+      />
+      <img
+        data-rating="9.7"
+        tabindex="0"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQVcQzpXlE7LssuXCwGksZHHFyNsd5qOvEtK10Lj87dN5GqP5nx"
+      />
+      <img
+        data-rating="9.8"
+        tabindex="0"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT6nVP6nV1jEMDwa2wanGS9MgHmHJI6y3GDY9BVRMc_8G3I5aiE"
+      />
+      <img
+        data-rating="9.5"
+        tabindex="0"
+        src="https://ih0.redbubble.net/image.485098206.2054/flat,550x550,075,f.u2.jpg"
+      />
+      <img
+        data-rating="9.7"
+        tabindex="0"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSwqij2z8CroS_9e6MsyXi_qLsTRLHX1Vg5K5it3zWRaO1m1fRC"
+      />
+      <img
+        data-rating="9.4"
+        tabindex="0"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTWIbrTxJVMwIaGKxhp1mYA5rhtP5GKQBIvjnt9hne_pWuhnt6D"
+      />
+    </div>
+
+    <div class="modal">
+      <div class="modal-inner">
+        <button type="button" class="prev">Back</button>
+        <div class="main">
+          <img src="https://ih0.redbubble.net/image.485098206.2054/flat,550x550,075,f.u2.jpg" />
+          <h2>Rating: <b></b></h2>
+        </div>
+        <button type="button" class="next">Next</button>
+      </div>
+    </div>
+    <script src="poster.js"></script>
+  </body>
+</html>
