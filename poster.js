@@ -6,13 +6,22 @@ const main = modal.querySelector(".main");
 const prev = modal.querySelector(".prev");
 const next = modal.querySelector(".next");
 let currentImage;
+let rating = ["9.2", "9.3", "9.4", "9.5", "9.6", "9.7", "9.8", "9.5", "9.7", "9.4"];
+
+function savetoLocalStorage() {
+  localStorage.setItem("rating", JSON.stringify(rating));
+}
+
+savetoLocalStorage();
 
 function showImage(element) {
-  const rating = element.dataset.rating;
+  const rate = JSON.parse(localStorage.getItem("rating"));
+  const id = element.id;
+  const elementRating = rate[id - 1];
   const location = element.src;
   currentImage = element;
   main.querySelector("img").src = location;
-  main.querySelector("b").textContent = rating;
+  main.querySelector("b").textContent = elementRating;
   modal.classList.add("open");
   window.addEventListener("keyup", handleKey);
   prev.addEventListener("click", showPrevImage);
@@ -22,6 +31,7 @@ function showImage(element) {
 function closeModal() {
   modal.classList.remove("open");
   gallery.classList.remove("fade");
+  window.removeEventListener("keyup", handleKey);
 }
 
 function handleEvent(element) {
@@ -55,6 +65,11 @@ function closeModalFromOutside(event) {
 poster.forEach(image => {
   image.addEventListener("click", event => {
     handleEvent(event.currentTarget);
+  });
+  image.addEventListener("keyup", event => {
+    if (event.key == "Enter") {
+      handleEvent(event.currentTarget);
+    }
   });
 });
 
