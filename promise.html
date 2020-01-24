@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <style>
+      div {
+        width: 250px;
+        height: 250px;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        border-style: solid;
+        position: relative;
+        top: 250px;
+        left: 600px;
+        transition: all 0.5s;
+      }
+
+      div.circle {
+        border-radius: 50%;
+      }
+
+      div.red {
+        background-color: black;
+        color: whitesmoke;
+      }
+
+      div.purple {
+        background-color: whitesmoke;
+        color: black;
+        font-size: 50px;
+      }
+
+      div.fadeout {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      Click Here!
+    </div>
+
+    <script>
+      const box = document.querySelector("div");
+
+      const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+      const animate = event => {
+        const currentElement = event.currentTarget;
+        wait(100)
+          .then(() => {
+            currentElement.classList.add("red");
+            currentElement.innerText = "1";
+            return wait(2000);
+          })
+          .then(() => {
+            currentElement.classList.add("purple");
+            currentElement.classList.add("circle");
+            currentElement.innerText = "2";
+            return wait(1000);
+          })
+          .then(() => {
+            currentElement.classList.remove("circle");
+            currentElement.classList.remove("purple");
+            currentElement.innerText = "3";
+            return wait(2000);
+          })
+          .then(() => {
+            currentElement.classList.remove("red");
+            currentElement.classList.add("circle");
+            currentElement.classList.add("purple");
+            currentElement.innerText = "Vamos!";
+            return wait(1000);
+          })
+          .then(() => {
+            currentElement.classList.add("Fadeout");
+          });
+      };
+
+      box.addEventListener("click", animate);
+    </script>
+  </body>
+</html>
