@@ -46,7 +46,7 @@ function ask(options) {
       deletePopUp(popup);
     });
 
-    popup.addEventListener("submit", captureData);
+    popup.addEventListener("submit", captureData, { once: true });
   });
 }
 
