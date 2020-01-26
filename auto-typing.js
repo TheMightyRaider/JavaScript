@@ -6,24 +6,27 @@ function generateNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-function addCursor(typedTill) {
-  return new Promise(resolve => {
-    const cursor = "|";
-    console.log((typedTill += cursor));
-  });
+async function addCursor(typedTill) {
+  cursor = document.createElement("span");
+  cursor.textContent = "|";
+  cursor.classList.add("cursor-color");
+  window.type = typedTill;
+  await wait(1000);
+  typedTill.insertAdjacentElement("beforeend", cursor);
+  console.log(typedTill.textContent);
 }
 
 async function type(item) {
   const text = item.textContent;
   let typedTill = "";
+  const { min, max } = item.dataset;
+  const waitingTime = generateNumber(50, 150);
   for (const letter of text) {
     typedTill += letter;
-    const { min, max } = item.dataset;
-    const waitingTime = generateNumber(min, max);
     await wait(waitingTime);
     item.textContent = typedTill;
-    addCursor(item.textContent);
+    await addCursor(item);
   }
 }
 
-document.querySelectorAll("[data-type").forEach(type);
+document.querySelectorAll("[data-type]").forEach(type);
