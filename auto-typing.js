@@ -11,16 +11,17 @@ async function addCursor(typedTill) {
   cursor.textContent = "|";
   cursor.classList.add("cursor-color");
   window.type = typedTill;
-  await wait(1000);
+  await wait(100);
   typedTill.insertAdjacentElement("beforeend", cursor);
-  console.log(typedTill.textContent);
+  await wait(150);
+  cursor.classList.add("close");
 }
 
 async function type(item) {
   const text = item.textContent;
   let typedTill = "";
   const { min, max } = item.dataset;
-  const waitingTime = generateNumber(50, 150);
+  const waitingTime = generateNumber(200, 300);
   for (const letter of text) {
     typedTill += letter;
     await wait(waitingTime);

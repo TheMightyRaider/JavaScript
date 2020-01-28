@@ -1,7 +1,11 @@
 <html>
   <head>
     <style>
+      body {
+        background-color: darksalmon;
+      }
       div {
+        background-color: deepskyblue;
         width: 250px;
         height: 250px;
         display: grid;
@@ -12,6 +16,8 @@
         top: 250px;
         left: 600px;
         transition: all 0.5s;
+        font-family: Verdana;
+        font-size: 25px;
       }
 
       div.circle {
@@ -50,7 +56,7 @@
           .then(() => {
             currentElement.classList.add("red");
             currentElement.innerText = "1";
-            return wait(2000);
+            return wait(1000);
           })
           .then(() => {
             currentElement.classList.add("purple");
@@ -62,14 +68,18 @@
             currentElement.classList.remove("circle");
             currentElement.classList.remove("purple");
             currentElement.innerText = "3";
-            return wait(2000);
+            return wait(1000);
           })
           .then(() => {
             currentElement.classList.remove("red");
             currentElement.classList.add("circle");
             currentElement.classList.add("purple");
             currentElement.innerText = "Vamos!";
-            return wait(1000);
+            return wait(1200);
+          })
+          .then(() => {
+            currentElement.innerText = ":)";
+            return wait(1200);
           })
           .then(() => {
             currentElement.classList.add("Fadeout");
