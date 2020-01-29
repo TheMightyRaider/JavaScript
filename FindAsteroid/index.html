@@ -1,10 +1,25 @@
 <html>
+  <head>
+    <style>
+      .asteroids {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(200px, 1fr));
+        grid-gap: 20px;
+        margin: 10px;
+      }
+      .asteroid {
+        padding: 20px;
+        border-style: solid;
+      }
+    </style>
+  </head>
   <body>
     <form>
       <fieldset>
         <input type="date" name="inputDate" />
         <button type="submit">Submit</button>
       </fieldset>
+      <div class="asteroids"></div>
     </form>
 
     <script src="script.js"></script>
