@@ -6,25 +6,52 @@ const apikey = "bJOoBSpxEzxxkdaVE8QsMM4cBNpaIVUCbmN5ae9z";
 let asteroidEndpoint;
 let startDate, endDate;
 let asteroidDetails = [];
+let nextMeetingDate = [];
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function handleErr(err) {
   console.log(`There has been some err`);
   console.error(err);
 }
 
-function displayDetails(data) {
+async function displayDetails(data) {
   const html = data.map(item => {
     return `<div class='asteroid'>
     <h2>Asteroid ${item.name} </h2>
-    <p>Size: ${item.size} KM</p>
-    <p>Time closest to Earth: ${item.time} </p>
-    <p>Speed: ${item.speed} Km/Sec</p>
-    <p>Distance From Earth [in A.U] :${item.distanceInAu}</p>
-    <p>${item.hazard ? "<b>There is possiblity of danger due to this asteroid</b>" : "Won't be a problem"} </p>
+    <p><b>Size:</b> ${item.size} KM</p>
+    <p><b>Time closest to Earth: </b>${item.time} </p>
+    <p><b>Speed</b>: ${item.speed} Km/Sec</p>
+    <p><b>Distance From Earth [in A.U] :</b>${item.distanceInAu}</p>
+    <p><b>Next Meeting:</b> ${item.next}</p>
+    <p><b>Previous Meeting:</b> ${item.previousMeeting}</p>
+    <p>${item.hazard ? "<b>There is possiblity of danger due to this asteroid</b>" : "This won't be a problem"} </p>
     </div>`;
   });
+  window.asteroidDetails = asteroidDetails;
   asteroids.innerHTML = html.join("");
   asteroidDetails = [];
+}
+
+async function findNextMeeting(data) {
+  data.forEach(async item => {
+    const asteroidMeetingPromise = await fetch(item.link);
+    const asteroidMeetingJson = await asteroidMeetingPromise.json();
+    const datesArray = asteroidMeetingJson.close_approach_data;
+    const currentindex = datesArray.findIndex(item => item.close_approach_date == startDate);
+    if (datesArray.length > 1 && currentindex != datesArray.length - 1 && currentindex != 0) {
+      const meetingDateindex = datesArray[currentindex + 1].close_approach_date;
+      item["next"] = meetingDateindex;
+      item["previousMeeting"] = datesArray[currentindex - 1].close_approach_date;
+    } else {
+      item["next"] = "This is the last time to see this";
+      item["previousMeeting"] = `This is has been found at ${startDate.split("-")[0]}`;
+    }
+  });
+  await wait(3000);
+  displayDetails(asteroidDetails);
 }
 
 async function findAsteroid(date) {
@@ -41,10 +68,13 @@ async function findAsteroid(date) {
   const jsonData = await nasaData.json();
 
   console.log("Fetched");
-  //Fetch AsteroidName, Size , Time it is closest to Earth wrt au, Speed per sec , Distance from Earth in Km;
+
+  // Fetch AsteroidName, Size , Time it is closest to Earth wrt au, Speed per sec , Distance from Earth in Km;
+
   const nearByObjects = jsonData.near_earth_objects[startDate];
   nearByObjects.forEach(items => {
     asteroidDetails.push({
+      link: items.links.self,
       name: items.name,
       size: items.estimated_diameter.kilometers.estimated_diameter_max.toFixed(2),
       time: new Date(items.close_approach_data[0].epoch_date_close_approach).toLocaleTimeString([], {
@@ -58,14 +88,14 @@ async function findAsteroid(date) {
   });
 
   asteroidDetails.sort((a, b) => {
-    return a.distanceInAu - b.distanceInAu;
+    return a.distanceInAu - b.distanceInAu; // Try sorting it by Time!
   });
 
-  displayDetails(asteroidDetails);
+  findNextMeeting(asteroidDetails);
 
   /*TODO:
-       1. Find the Founded date, and next closest meeting.
-       2. Provide a more details link for each asteroid.
+       1. Provide a more details link for each asteroid.
+       2. Add CSS
   */
 }
 
@@ -76,12 +106,11 @@ function handleClick(event) {
 }
 
 function handlePress(event) {
-  console.log("Pressed");
-  if (event == "Enter") {
-    handleClick();
+  if (event.key == "Enter") {
+    handleClick(); // How to pass the submit event as a arugument
   }
 }
 
 // Listen for submit in the form
 form.addEventListener("submit", handleClick);
-form.addEventListener("keypress", handlePress);
+// window.addEventListener("keypress", handlePress);

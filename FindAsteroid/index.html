@@ -10,14 +10,22 @@
       .asteroid {
         padding: 20px;
         border-style: solid;
+        font-family: "Lucida Sans";
+        font-style: oblique;
+        font-size: 20px;
+      }
+      .asteroid b {
+        font-size: 20px;
+        font-style: oblique;
+        font-family: sans-serif;
       }
     </style>
   </head>
   <body>
     <form>
       <fieldset>
-        <input type="date" name="inputDate" />
-        <button type="submit">Submit</button>
+        <input type="date" name="inputDate" value="2020-01-30" />
+        <button type="submit" name="submit" onkeypress="handlePress()">Submit</button>
       </fieldset>
       <div class="asteroids"></div>
     </form>
