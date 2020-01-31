@@ -8,7 +8,7 @@
         margin: 10px;
       }
       .asteroid {
-        padding: 20px;
+        padding: 10px;
         border-style: solid;
         font-family: "Lucida Sans";
         font-style: oblique;
@@ -19,6 +19,34 @@
         font-style: oblique;
         font-family: sans-serif;
       }
+      .loading {
+        display: inline-block;
+        visibility: hidden;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        margin: auto;
+        text-align: center;
+        padding: 15px;
+      }
+      .loading.border {
+        border-style: groove;
+        border-width: 15px;
+        border-color: burlywood;
+        border-radius: 150px;
+      }
+      .loading p {
+        /* margin-top: 20px; */
+        font-size: 25px;
+        font-family: "Tahoma";
+      }
+      .loading.open {
+        visibility: visible;
+      }
     </style>
   </head>
   <body>
@@ -27,6 +55,9 @@
         <input type="date" name="inputDate" value="2020-01-30" />
         <button type="submit" name="submit" onkeypress="handlePress()">Submit</button>
       </fieldset>
+      <div class="loading border">
+        <p>Finding some asteroids for you !</p>
+      </div>
       <div class="asteroids"></div>
     </form>
 

@@ -1,6 +1,8 @@
 const form = document.querySelector("form");
 const submit = document.querySelector("button");
 const asteroids = document.querySelector(".asteroids");
+const loading = document.querySelector(".loading");
+console.log(loading.classList.value.includes("border"));
 const baseEndpoint = " https://api.nasa.gov/neo/rest/v1/feed?";
 const apikey = "bJOoBSpxEzxxkdaVE8QsMM4cBNpaIVUCbmN5ae9z";
 let asteroidEndpoint;
@@ -12,6 +14,14 @@ function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// function interval(data, ms) {
+//   return new Promise(resolve =>
+//     setInterval(function() {
+//       resolve(data);
+//     }, ms)
+//   );
+// }
+
 function handleErr(err) {
   console.log(`There has been some err`);
   console.error(err);
@@ -21,16 +31,15 @@ async function displayDetails(data) {
   const html = data.map(item => {
     return `<div class='asteroid'>
     <h2>Asteroid ${item.name} </h2>
-    <p><b>Size:</b> ${item.size} KM</p>
+    <p><b>Size:</b> ${item.size} Meters</p>
     <p><b>Time closest to Earth: </b>${item.time} </p>
     <p><b>Speed</b>: ${item.speed} Km/Sec</p>
     <p><b>Distance From Earth [in A.U] :</b>${item.distanceInAu}</p>
-    <p><b>Next Meeting:</b> ${item.next}</p>
-    <p><b>Previous Meeting:</b> ${item.previousMeeting}</p>
+    <p><b>Next Seen:</b> ${item.next}</p>
+    <p><b>Previously Seen:</b> ${item.previousMeeting}</p>
     <p>${item.hazard ? "<b>There is possiblity of danger due to this asteroid</b>" : "This won't be a problem"} </p>
     </div>`;
   });
-  window.asteroidDetails = asteroidDetails;
   asteroids.innerHTML = html.join("");
   asteroidDetails = [];
 }
@@ -47,18 +56,28 @@ async function findNextMeeting(data) {
       item["previousMeeting"] = datesArray[currentindex - 1].close_approach_date;
     } else {
       item["next"] = "This is the last time to see this";
-      item["previousMeeting"] = `This is has been found at ${startDate.split("-")[0]}`;
+      item["previousMeeting"] = `This has been found at ${startDate.split("-")[0]}`;
     }
   });
-  await wait(3000);
-  displayDetails(asteroidDetails);
+}
+
+function removeAsteroid() {
+  const asteroid = document.querySelectorAll(".asteroid");
+  asteroid.forEach(item => item.remove());
+  console.log("Erased");
 }
 
 async function findAsteroid(date) {
   //Define the query params
   startDate = endDate = date;
 
+  asteroidDetails ? removeAsteroid() : null;
   console.log("Fetching");
+  loading.classList.add("open");
+
+  const blink = setInterval(function() {
+    loading.classList.value.includes("border") ? loading.classList.remove("border") : loading.classList.add("border");
+  }, 150);
 
   /* PARAMS/QUERY FORMAT 
      ?start_date=START_DATE&end_date=END_DATE&api_key=API_KEY */
@@ -76,7 +95,7 @@ async function findAsteroid(date) {
     asteroidDetails.push({
       link: items.links.self,
       name: items.name,
-      size: items.estimated_diameter.kilometers.estimated_diameter_max.toFixed(2),
+      size: items.estimated_diameter.meters.estimated_diameter_max.toFixed(2),
       time: new Date(items.close_approach_data[0].epoch_date_close_approach).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit"
@@ -92,10 +111,15 @@ async function findAsteroid(date) {
   });
 
   findNextMeeting(asteroidDetails);
+  await wait(5000);
+  loading.classList.remove("open");
+  clearInterval(blink);
+  displayDetails(asteroidDetails);
 
   /*TODO:
        1. Provide a more details link for each asteroid.
-       2. Add CSS
+       2. Add Loading Screen
+       3. Add CSS
   */
 }
 
