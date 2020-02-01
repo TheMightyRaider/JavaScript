@@ -1,15 +1,12 @@
 const form = document.querySelector("form");
 const submit = document.querySelector("button");
 const asteroids = document.querySelector(".asteroids");
-const loading = document.querySelector(".loading");
-console.log(loading.classList.value.includes("border"));
 const baseEndpoint = " https://api.nasa.gov/neo/rest/v1/feed?";
 const apikey = "bJOoBSpxEzxxkdaVE8QsMM4cBNpaIVUCbmN5ae9z";
 let asteroidEndpoint;
 let startDate, endDate;
 let asteroidDetails = [];
 let nextMeetingDate = [];
-
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -41,6 +38,7 @@ async function displayDetails(data) {
     </div>`;
   });
   asteroids.innerHTML = html.join("");
+  asteroids.querySelectorAll(".asteroid").forEach(item => item.classList.add("transition"));
   asteroidDetails = [];
 }
 
@@ -74,20 +72,20 @@ async function findAsteroid(date) {
 
   asteroidDetails ? removeAsteroid() : null;
   console.log("Fetching");
-  loading.classList.add("open");
+  document.body.classList.add("load");
 
-  const blink = setInterval(function() {
-    loading.classList.value.includes("border") ? loading.classList.remove("border") : loading.classList.add("border");
-  }, 150);
+  // const blink = setInterval(function() {
+  //   loading.classList.value.includes("border") ? loading.classList.remove("border") : loading.classList.add("border");
+  // }, 150);
 
   /* PARAMS/QUERY FORMAT 
      ?start_date=START_DATE&end_date=END_DATE&api_key=API_KEY */
-
   asteroidEndpoint = `${baseEndpoint}start_date=${startDate}&end_date=${endDate}&api_key=${apikey}`;
   const nasaData = await fetch(asteroidEndpoint);
   const jsonData = await nasaData.json();
   console.log("Fetched");
 
+  document.body.classList.remove("bckimage");
   // Fetch AsteroidName, Size , Time it is closest to Earth wrt au, Speed per sec , Distance from Earth in Km;
 
   const nearByObjects = jsonData.near_earth_objects[startDate];
@@ -112,8 +110,8 @@ async function findAsteroid(date) {
 
   findNextMeeting(asteroidDetails);
   await wait(5000);
-  loading.classList.remove("open");
-  clearInterval(blink);
+  document.body.classList.remove("load");
+  // clearInterval(blink);
   displayDetails(asteroidDetails);
 
   /*TODO:

@@ -1,11 +1,56 @@
 <html>
   <head>
     <style>
+     .inhance{
+       top:0;
+       left:0;
+       right: 0;
+       bottom: 0;
+       position: fixed;
+       border-style: solid;
+       width:100%;
+       height: 100%;
+       opacity: 0.1;
+       /* background-image: url(https://i.pinimg.com/originals/45/4a/bf/454abf6f782bb772eeb603c8335bee5d.gif); */
+       background-image: url(https://i.gifer.com/3f2X.gif);
+       background-repeat:round;
+       background-position: center;
+       background-color:black;
+       pointer-events: none;
+     }
+
+     .form1{
+       background-color:#808080;
+       width:250px;
+       height: 120px;
+       font-family: "Candara" ;
+       font-weight: 1000;
+       font-size:20px;
+       padding: 20px;
+       
+     }
+
+      body.bckimage{
+        background-image: url(https://cdn.dribbble.com/users/979364/screenshots/2887703/asteroid-logo-dribb.png),url(https://cdn.dribbble.com/users/2415888/screenshots/6829286/satel.gif);
+        background-position: center,bottom right;
+        background-repeat: no-repeat;  
+        transition: 1s;
+    
+      }
+
+      body.load{
+        background-image: url(loading.gif);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #F6F9F6;
+       
+      }
       .asteroids {
         display: grid;
-        grid-template-columns: repeat(4, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         grid-gap: 20px;
         margin: 10px;
+        
       }
       .asteroid {
         padding: 10px;
@@ -13,54 +58,25 @@
         font-family: "Lucida Sans";
         font-style: oblique;
         font-size: 20px;
+        background-color: blanchedalmond
+        /* background-image: url(https://cdn.dribbble.com/users/1162077/screenshots/4606258/comet-animation-blue.gif);
+        background-repeat: no-repeat; */
       }
-      .asteroid b {
-        font-size: 20px;
-        font-style: oblique;
-        font-family: sans-serif;
-      }
-      .loading {
-        display: inline-block;
-        visibility: hidden;
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 150px;
-        height: 150px;
-        margin: auto;
-        text-align: center;
-        padding: 15px;
-      }
-      .loading.border {
-        border-style: groove;
-        border-width: 15px;
-        border-color: burlywood;
-        border-radius: 150px;
-      }
-      .loading p {
-        /* margin-top: 20px; */
-        font-size: 25px;
-        font-family: "Tahoma";
-      }
-      .loading.open {
-        visibility: visible;
-      }
+      
     </style>
   </head>
-  <body>
+  <body class="bckimage">
     <form>
-      <fieldset>
-        <input type="date" name="inputDate" value="2020-01-30" />
+      <fieldset class="form1">
+        <label>When are you looking for it?</label><br><br>
+        <input type="date" name="inputDate" value="2020-01-30" /><br><br>
         <button type="submit" name="submit" onkeypress="handlePress()">Submit</button>
       </fieldset>
-      <div class="loading border">
-        <p>Finding some asteroids for you !</p>
-      </div>
       <div class="asteroids"></div>
     </form>
-
+      <div class="inhance">
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
