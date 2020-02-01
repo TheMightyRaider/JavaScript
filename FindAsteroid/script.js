@@ -46,7 +46,8 @@ async function displayDetails(data) {
 
 async function findNextMeeting(data) {
   data.forEach(async item => {
-    const asteroidMeetingPromise = await fetch(item.link);
+    const https = item.link.slice(0, 4) + "s" + item.link.slice(4);
+    const asteroidMeetingPromise = await fetch(https);
     const asteroidMeetingJson = await asteroidMeetingPromise.json();
     const datesArray = asteroidMeetingJson.close_approach_data;
     const currentindex = datesArray.findIndex(item => item.close_approach_date == startDate);
@@ -85,7 +86,6 @@ async function findAsteroid(date) {
   asteroidEndpoint = `${baseEndpoint}start_date=${startDate}&end_date=${endDate}&api_key=${apikey}`;
   const nasaData = await fetch(asteroidEndpoint);
   const jsonData = await nasaData.json();
-
   console.log("Fetched");
 
   // Fetch AsteroidName, Size , Time it is closest to Earth wrt au, Speed per sec , Distance from Earth in Km;
