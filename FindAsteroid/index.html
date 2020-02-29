@@ -27,6 +27,7 @@
        font-weight: 1000;
        font-size:20px;
        padding: 20px;
+       margin:10px;
        
      }
 
@@ -66,17 +67,17 @@
     </style>
   </head>
   <body class="bckimage">
-    <form>
-      <fieldset class="form1">
+    <form onkeypress="handlePress()">
+      <fieldset class="form1" >
         <label>When are you looking for it?</label><br><br>
         <input type="date" name="inputDate" value="2020-01-30" /><br><br>
-        <button type="submit" name="submit" onkeypress="handlePress()">Submit</button>
+        <button type="submit" name="submit" >Submit</button>
       </fieldset>
       <div class="asteroids"></div>
     </form>
       <div class="inhance">
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js" type="module"></script>
   </body>
 </html>
